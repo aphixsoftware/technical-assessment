@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  webserver:
+    container_name: xpl_dc_assessment_webserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./apache/vhost.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - database
+    working_dir: /var/www/html
+    #command: bash -c "composer install && apache2-foreground"
+###> doctrine/doctrine-bundle ###
+  database:
+    container_name: xpl_dc_assessment_db
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  db-data:
+###< doctrine/doctrine-bundle ###

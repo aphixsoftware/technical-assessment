@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1>Products</h1>
+
+<section class="card-container">
+    {% for product in products %}
+        <article class="card">
+            <picture class="thumbnail">
+                <img src="{{ product.imageUrl }}" alt="{{ product.productName }}">
+            </picture>
+            <div class="card-content">
+                <h3>{{ product.productName }}</h3>
+                {% if features.ShowPriceInListing == true %}
+                    <p>	&euro;{{ product.unitPrice }}<p>
+                    <p>Quantity: {{ product.quantity }}</p>
+                {% endif %}
+                <form action="/cart/add" method="POST" style="margin-top: 10px;">
+                    <input type="hidden" name="productId" value="{{ product.productId }}">
+                    <input type="hidden" name="productName" value="{{ product.productName }}">
+                    <input type="hidden" name="unitPrice" value="{{ product.unitPrice }}">
+                    <input type="hidden" name="imageUrl" value="{{ product.imageUrl }}">
+                    <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </article>
+    {% endfor %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+index:
+    path: /
+    controller: App\Controller\ProductsController::index
+cart:
+    path: /cart
+    controller: App\Controller\CartController::index

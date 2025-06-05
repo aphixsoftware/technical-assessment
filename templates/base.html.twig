@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+            <style>
+                .heading-container{
+                    width:100%;
+                }
+
+                .heading {
+                    width:100%;
+                    height:50px;
+                    padding:5px;
+                    background-color:#131921;
+                    color:#fff;
+                    font-size:1.25rem;
+                }
+                nav {
+                    display:block;
+                    width:100%;
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: #333;
+                }
+
+                nav a {
+                    float: left;
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+
+                /* Change the link color to #111 (black) on hover */
+                nav a:hover {
+                    background-color: #111;
+                }
+
+                .content-container{
+                    padding:5px;
+                }
+
+                .content-container h1{
+                    color: #131921;
+                    text-decoration:underline;
+                }
+
+                .card-container{
+                    display:flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                }
+
+                .card {
+                    flex: 0 1 calc(25% - 1em);
+                }
+
+                .card img {
+                    display: block;
+                    border: 0;
+                    width: 100%;
+                    height: auto;
+                }
+
+                .footer {
+                    width:100%;
+                    height:50px;
+                    padding:5px;
+                    background-color:#131921;
+                    color:#fff;
+                    text-align:center;
+                }
+            </style>
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="heading-container">
+            <div class="heading">
+                Aphix Webshop!
+            </div>
+            <nav>
+                <a href="/">Products</a>
+                <a href="{{ path('cart') }}">Cart</a>
+            </nav>
+        </div>
+
+        <div class="content-container">
+        {% block body %}{% endblock %}
+        </div>
+
+        <div class="footer">
+        	&copy; Aphix Software Ltd
+        </div>
+    </body>
+</html>

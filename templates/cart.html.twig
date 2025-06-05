@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Your Cart</h1>
+
+{% if products is empty %}
+    <p>Your cart is empty.</p>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.productName }}</td>
+                    <td>
+                        <img src="{{ product.imageUrl }}" alt="{{ product.productName }}" style="width: 50px;">
+                    </td>
+                    <td>&euro;{{ product.unitPrice }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>&euro;{{ (product.unitPrice * product.quantity)|number_format(2) }}</td>
+                    <td>
+                        <form action="/cart/remove" method="POST" style="display:inline;">
+                            <input type="hidden" name="productId" value="{{ product.productId }}">
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="margin-top: 20px;">
+        <strong>Net Total:</strong> &euro;{{ totals.net|number_format(2) }}<br>
+        <strong>Tax Total:</strong> &euro;{{ totals.tax|number_format(2) }}<br>
+        <strong>Gross Total:</strong> &euro;{{ totals.gross|number_format(2) }}
+    </div>
+{% endif %}
+
+<a href="/" style="display: inline-block; margin-top: 20px;">Continue Shopping</a>
+{% endblock %}
